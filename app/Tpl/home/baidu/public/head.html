@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$seoconfig.title}</title>
+<meta content="{$seoconfig.description}" name="description">
+<meta content="{$seoconfig.keywords}" name="keywords">
+<meta property="wb:webmaster" content="92c397dc51ce7300" />
+<script>
+	var URL = '__URL__';
+	var SELF = '__SELF__';
+	var ROOT_PATH = '__ROOT__';
+	var PUBLIC_PATH = '__PUBLIC__';
+	var APP	 =	 '__APP__';
+	//语言项目
+	var lang = new Object();
+	<volist name=":L('js_lang')" id="val">
+		lang.{$key} = "{$val}";
+	</volist>
+	
+</script>
+<link href="__PUBLIC__/theme/baidu/css/base.css" rel="stylesheet" media="screen" />
+<link href="__PUBLIC__/theme/baidu/css/mtceodialogtip.css" rel="stylesheet" media="screen" />
+<script src="__PUBLIC__/js/jquery-1.8.3.js"></script>
+<script src="__PUBLIC__/js/jquery.tools.min.js"></script>
+<script src="__PUBLIC__/js/mtceo.js"></script>
+<script src="__PUBLIC__/js/home.js"></script>
+<script src="__PUBLIC__/js/home_extend.js"></script>
+<script src="__PUBLIC__/js/jquery.form.js"></script>
+<script src="__PUBLIC__/js/jquery.flash.js"></script>
+<script src="__PUBLIC__/js/raphael.js"></script>
+<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" >
+
+
+</head>
+
+<body>
+<div class="headnav">
+
+<div class="fr">
+<if condition="$visitor['uid'] eq ''">
+<a href="{:U('user/login')}">登录</a><em>|</em><a href="{:U('user/register')}">注册</a><em>|</em>
+</if>
+<if condition="$visitor['uid'] gt 0">
+<a href="{:U('ucenter/index')}" >{$visitor['username']}</a>
+<a href="{:U('user/logout')}" >[退出]</a><em>|</em>
+<a href="{:U('ucenter/index')}" >个人中心</a><em>|</em>
+
+</if>
+<a href="{:U('index/index')}">文库首页</a></div>
+<div class="clear"></div>
+</div>
+<div class="container{$cssnum}">
+<div class="headmid top-search-box">
+<div class="logo fl"><a href="{:C('mtceo_site_url')}"></a></div>
+<form method="get">
+<input type="hidden" name="g" value="home" />
+<input type="hidden" name="m" value="search" />
+<input type="hidden" name="a" value="index" />
+ <span class="s_ipt_wr">
+ <input type="text" id="kw" name="searchword" maxlength="256" <if condition="$searchword neq null">class="s_ipt" value="{$searchword}"<else /> class="s_ipt placeholder"   placeholder="文档..."</if> />
+
+ </span>
+ <span class="s_btn_wr"> 
+ <input id="sb" value="搜索" class="s_btn" onmouseover="this.className='s_btn s_btn_h'" onmousedown="this.className='s_btn s_btn_d'" onmouseout="this.className='s_btn'" type="submit">
+ </span>
+ <span class="s_tools"> </span> 
+ <div class="g-sl" alog-group="switch.doctype"> <label for="t_all">
+ <input name="lm" value="0" id="t_all" <if condition="$search.lm eq 0">checked=""</if> type="radio">全部</label>
+  <label for="t_doc"><input name="lm" value="1" id="t_doc" <if condition="$search.lm eq 1">checked=""</if> type="radio">DOC</label>
+   <label for="t_ppt"><input name="lm" value="3" id="t_ppt" <if condition="$search.lm eq 3">checked=""</if> type="radio">PPT</label>
+    <label for="t_txt"><input name="lm" value="5" id="t_txt" <if condition="$search.lm eq 5">checked=""</if> type="radio">TXT</label>
+	 <label for="t_pdf"><input name="lm" value="2" id="t_pdf" <if condition="$search.lm eq 2">checked=""</if> type="radio">PDF</label>
+	  <label for="t_xls"><input name="lm" value="4" id="t_xls" <if condition="$search.lm eq 4">checked=""</if> type="radio">XLS</label>
+	   <div style="clear:both"></div> </div>
+ </form>
+ <div class="clear"></div>
+</div>
+<if condition="$cssnum eq 1">
+<div class="nav">
+<ul>
+<li <if condition="$modulename eq 'index'"> class="cur"</if>><a href="{:U('index/index')}">文库首页</a></li>
+<li id="allcate" <if condition="$actionname eq 'doccate'"> class="cur"</if>><a href="{:U('doc/doccate')}">全部分类</a><b class="d-ic disnone"></b>
+</li>
+<volist name="navlist['main']" id="vo">
+
+<li><a href="{$vo.link}" alt="{$vo.alias}" <if condition="$vo['target'] eq 1"> target="_blank"</if>>{$vo.name}</a></li>
+
+</volist>
+
+
+
+<li <if condition="$modulename eq 'ucenter'"> class="cur"</if>><a href="{:U('ucenter/index')}">我的文库</a></li>
+
+
+</ul>
+
+</div>
+
+
+<div style="margin-top:20px;"></div>
+</if>

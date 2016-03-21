@@ -1,0 +1,1 @@
+<?php	return array ( 'db_host' => 'localhost', 'db_port' => '3306', 'db_user' => 'root', 'db_pass' => 'xp19940812', 'db_name' => 'mtceo', 'db_prefix' => 'mt_', 'admin_user' => 'admin', 'admin_pass' => '1', 'admin_pass_confirm' => '1', 'admin_email' => '1@1.com', 'web_md5' => 'mtceo', );?>

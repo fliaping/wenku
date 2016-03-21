@@ -1,0 +1,51 @@
+<include file="./app/Tpl/home/baidu/public/head.html" />
+<include file="ucenter:ucleft" />
+
+<div class="ucright">
+<div class="menuname">
+<ul><li class="cur"><a href="#">账号绑定</a></li>
+
+</ul>
+
+
+<b><s></s></b>
+
+</div>
+<div class="submenu">
+<ul>
+<li><a href="{:U('ucenter/bangding')}" class="cur">账号绑定</a></li>
+
+
+</ul>
+
+
+
+
+</div>
+<div class="userlist">
+<ul>
+                    <volist name="oauth_list" id="val">
+                    <li>
+                        <div><img src="__PUBLIC__/images/oauth/{$val.code}/bind.png" /></div>
+                        <div class="bind_web" style="height:70px;">
+                            <p class="unbind">{$val.name} <if condition="$val.isbind eq 1">{:L('binded')}{$val.name}<else/>({:L('nobind')})</if></p>
+                            <if condition="$val.isbind eq 1">
+                            <p class="mt5"><a href="{:U('oauth/index', array('type'=>'unbind', 'mod'=>$val['code']))}" class="clr6">{:L('unbind')}</a></p>
+                            <else/>
+                            <p class="bind_result"><a href="{:U('oauth/index', array('type'=>'bind', 'mod'=>$val['code']))}" class="btn">{:L('gobind')}</a></p>
+                            </if>
+                        </div>
+                    </li>
+                    </volist>
+</ul>
+</div>
+
+
+
+</div>
+
+<div class="clear">
+
+</div>
+
+<include file="./app/Tpl/home/baidu/public/footer.html" />

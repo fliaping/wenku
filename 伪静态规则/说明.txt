@@ -1,0 +1,60 @@
+根据服务器环境将相应的伪静态规则文件放在网站根目录！
+伪静态教程见官网：
+http://bbs.mtceo.net/thread-6-1-1.html
+
+--------------------Apache---------------------
+ 1、httpd.conf配置文件中加载了mod_rewrite.so模块
+ 2、AllowOverride None 将None改为 All
+ 3、确保URL_MODEL设置为2
+ 4、把url_rewrite文件夹下的.htaccess文件放到根目录
+ 
+
+<IfModule mod_rewrite.c>
+ RewriteEngine on
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+ </IfModule>
+ --------------------IIS---------------------
+ 如果你的服务器环境支持ISAPI_Rewrite的话，可以配置httpd.ini文件
+ httpd.ini在url_rewrite文件夹下
+ 高版本的IIS可以配置web.Config,配置rewrite节点
+ 内容见url_rewrite文件夹下的web.Config
+ 
+
+--------------------Nginx---------------------
+ Nginx.conf中配置转发规则
+ 规则内容见url_rewrite文件夹下的Nginx.conf
+ 
+if (!-e $request_filename) {
+    rewrite  ^(.*)$  /index.php?s=$1  last;
+ break;
+ 
+在众多服务器中，iis上面的伪静态问题是千奇百怪，规则也会因服务器不同而不同，下面是iis的规则，各位站长可以参考添加！
+ 
+[ISAPI_Rewrite]
+ # 3600 = 1 hour
+ CacheClockRate 3600
+ RepeatLimit 32
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_FILENAME} !-f
+ #大部分iis主机采用如下一条规则就可以了
+ RewriteRule (?!\/dh)(?!\/phpMyAdmin)(?!\/admin.php)(?!\/index.php)(?!\/Public)(?!\/data)(.*)$ /index\.php/$1 [I]
+ 
+#部分iis必须采用下面的规则才能实现伪静态，例如西部数码的云主机
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteRule ^/$ /index\.php [L]
+ RewriteRule ^/(.*)\.php$ /$1\.php [L]
+ RewriteRule ^/admin/(.*)$ /admin/$1 [L]
+ RewriteRule ^/index/(.*)$ /index/$1 [L]
+ RewriteRule ^/data/(.*)$ /data/$1 [L]
+ RewriteRule ^/includes/(.*)$ /includes/$1 [L]
+ RewriteRule ^/install/(.*)$ /install/$1 [L]
+ RewriteRule ^/Public/(.*)$ /Public/$1 [L]
+ RewriteRule ^/install\.php/(.*)$ /install\.php/$1 [L]
+ RewriteRule ^/index\.php(.*)$ /index\.php$1 [L]
+ RewriteRule ^/bdunion\.txt$ /bdunion\.txt [L]
+ RewriteRule ^/admin\.php\?(.*)$ /admin\.php\?$1 [L]
+ RewriteRule ^/(.*)$ /index\.php/$1 [L]
+ 

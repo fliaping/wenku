@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="GB2312"?>
+<config>
+<OFFICE_HOME>
+D:\Program Files (x86)\LibreOffice 4
+</OFFICE_HOME>
+<Src>
+E:\PHP\wenku\data\upload\doc_con
+</Src>
+
+<PDF>
+E:\PHP\wenku\data\upload\docswf\pdf
+</PDF>
+
+<officeFiles>
+E:\PHP\wenku\data\upload\doc_store
+</officeFiles>
+
+<pdfHtml>
+E:\PHP\wenku\data\upload\pdf.html
+</pdfHtml>
+
+<exampleHtml>
+E:\PHP\wenku\data\upload\docswf\data
+</exampleHtml>
+</config>

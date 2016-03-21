@@ -1,0 +1,521 @@
+<include file="./app/Tpl/home/baidu/public/head.html" />
+<div class="menu"><a href="{:U('index/index')}">文库首页</a><em class="bgcur"></em>{:getnavlist($info['cateid'])}</div>
+<div class="conbox">
+<div class="conleft">
+<div class="contitle">
+
+<div class="icon {$info.ext}"></div>
+<div class="titlename">{$info.title}</div>
+<div class="titleinfo">{$info.hits}人阅读</div>
+
+
+
+
+</div>
+<div class="coninfo">
+<!--<p>{$intro}</p>-->
+
+</div>
+
+
+
+
+<div class="main">
+
+
+
+<div class="mod doc-main ">
+<b class="top"><b class="tl"></b><b	class="tr"></b></b>
+<div class="inner">
+<div class="bd doc-reader">
+<div class="reader-container" id="reader-container-6" style="width: 809px;">
+<div class="reader-container-inner" id="reader-container-inner-6" style="height:700px;width:100%">
+
+
+{$ipstr}
+
+
+
+
+
+
+</div>
+
+
+
+<if condition="$download eq 2">
+
+<div class="showbuy">
+
+<p>该文档为付费文档，购买后可以下载或在线阅读全文<p>
+<div class="J_shownoform iic reader-pay" data-fix="true" data-padding="30px" data-uid="{$uid}" data-uri="{:U('doc/showdownload','id='.$info['id'])}" data-title="文档下载" data-id="showdownload" data-width="400" data-height="250">
+</div>
+</div>
+</if>
+
+
+<a class="ic reader-fullScreen top-right-fullScreen" href="{:U('doc/docconview',array('id'=>$info['id']))}"	title="全屏显示"></a>
+
+
+
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+<div class="conright">
+<div class="docupload">
+<a href="{:U('doc/doc_share')}" class="viewbtn docupbtn"></a>
+
+</div>
+
+<div class="docinfotitle" style="border:0">文档信息</div>
+
+<div class="docinfo">
+<p><a href="{:U('member/mydoclist',array('uid'=>$info['uid']))}">{$info['uid']|getusername}</a>贡献于{$info.add_time|fdate}</p>
+<div class="rate">
+     <div class="big_rate">
+        <span rate="2">&nbsp;</span>
+        <span rate="4">&nbsp;</span>
+        <span rate="6">&nbsp;</span>
+        <span rate="8">&nbsp;</span>
+        <span rate="10">&nbsp;</span>
+        <div style="width:45px;" class="big_rate_up"></div>
+     </div>
+     <p><span id="s" class="s"></span><span id="g" class="g"></span></p>
+  </div>
+  <p>(<if condition="$ratydata['voter'] eq null">0</if>{$ratydata['voter']}人评分)</p>
+  
+  
+  
+  <p>下载：<s>{$downnum}</s><em>|</em>收藏：<s>{$xhnum}</s><em>|</em>推荐：<s>{$tuijiannum}</s></p>
+  
+  
+  <p>({$commentcount}人评论)&nbsp;&nbsp;<a href="{:U('doc/docconcom',array('id'=>$info['id']))}">查看所有评论</a></p>
+  <p><a id="J_openDialog" uri="{$uid}" href="javascript:void(0)" class="userEva-btn2 mycomment-btn">
+  <b class="userEva-btn2 iccomment"></b>我要评论</a></p>
+  
+</div>
+
+<div class="docinfotitle">同类别文档</div>
+
+<div class="docinfo">
+<ul>
+<mtceo:doc type="lists" cateid="$info['cateid']" exceptid="$info['id']" how="rate" order="add_time desc" >
+			<volist name="data['list']" id="vo" offset="0" length="6">
+<li><a href="{:U('doc/doccon',array('id'=>$vo['id']))}">{$vo.title|msubstr=###,0,14}</a></li>
+</volist>
+</mtceo:doc>
+</ul>
+
+
+
+</div>
+
+<div class="docinfotitle">相关文档</div>
+
+<div class="docinfo">
+<ul>
+<mtceo:doc type="lists" similar="$info['id']"  exceptid="$info['id']" how="rate" order="add_time desc" >
+			<volist name="data['list']" id="vo" offset="0" length="6">
+<li><a href="{:U('doc/doccon',array('id'=>$vo['id']))}">{$vo.title|msubstr=###,0,14}</a></li>
+</volist>
+</mtceo:doc>
+
+</ul>
+
+
+
+</div>
+
+<div class="conad1">
+
+</div>
+
+</div>
+
+<div class="clear"></div>
+</div>
+<div class="reader-tools-bar-wrap">
+<div class="reader-tools-bar" style="width: 1000px;">
+<div class="left">
+<div style="float:left;">
+<a class="ic reader-fullScreen"	href="{:U('doc/docconview',array('id'=>$info['id']))}"	title="全屏显示" ></a></div>
+<div class="reader-tools-zoom">
+<a	style="display:none" href="javascript:void(0);"	class="ic zoom-decrease" title="缩小" ></a>
+<a style="display:none"	 href="javascript:void(0);"	class="ic zoom-add" title="放大"></a></div>
+</div>
+
+<div class="center" style="width: 880px;">
+<div class="centerLeft">
+<div class="reader-tools-page">
+<a	href="javascript:void(0);"	class="ic page-prev" title="上一页"></a>
+	<input type="text"	class="page-input" style="font-weight:bold;" />
+	<span class="page-count" style="font-weight:bold;">/&nbsp;{$realstrcount}</span>
+	<a	href="javascript:void(0);"	class="ic page-next" title="下一页"></a>
+	
+	
+	
+	
+	</div>
+
+<div class="reader-tools-page">
+	
+	<a href="javascript:void(0);" <if condition="$hasxh neq 1"> class="ic reader-favo" data-uri="{:U('common/operate',array('id'=>$info['id'],'typeid'=>1))}"<else /> class="ic reader-has-favoed" data-uri=""</if> onclick="front_operate(2,this);">
+	</a>
+	</div>
+	
+<div class="reader-tools-btn-wrap">
+<a href="javascript:void(0);" <if condition="$download eq 1">class="J_shownoform ic reader-download"<else />class="J_shownoform ic reader-pay"</if> data-fix="true" data-padding="30px" data-uid="{$uid}" data-uri="{:U('doc/showdownload','id='.$info['id'])}" data-title="文档下载" data-id="showdownload" data-width="400" data-height="250">
+</a>
+
+<span class="reader-download-price">
+<span class="ic download-price-ic"></span>
+<if condition="$download eq 1">免费<else />{$info.score}&nbsp;{:C('mtceo_score_name')}</if></span>
+</div>
+	
+<a style="display:none" class="ic reader-bookmark" title="书签"	href="javascript:void(0);"></a>
+	
+	<a class="reader-addToAlbum ic reader-ic-addToAlbum" title="推荐该文档"  href="javascript:void(0);" <if condition="$hastj neq 1">data-uri="{:U('common/operate',array('id'=>$info['id'],'typeid'=>1))}"<else /> data-uri=""</if> onclick="front_operate(3,this);">
+</a>
+</div>
+
+
+</div>
+</div>
+</div>
+
+<div id="nonegg"><div class='banner-wrap'>{:R('advert/index', array(3), 'Widget')}</div></div>
+
+
+
+
+
+<script type="text/javascript">
+
+
+$(function(){
+	
+	 
+   //获得svg的document对象   
+
+
+//if(xls==1){
+//$('.stl_04').children().each(function(i){
+
+
+//ttop=parseInt($(this).css('top'));
+//ttop1=parseInt($(this).children().css('font-size'));
+
+//$(this).css('top',(ttop-ttop1*2-50)+'px');
+
+
+	
+//});
+
+
+
+//}
+
+
+
+
+
+
+
+
+	
+	//---------------------------在每个页面后面加上广告栏-----------------------------------------------------
+	var str=$('#nonegg').html();
+	
+	//$(".reader-page").css('display','none');
+	//$(".reader-page").eq(0).show();
+	$(".reader-page").after(str);
+
+	
+	var ttp1=$('.stl_01').height();
+	var ttp2=$('.banner-wrap').height();
+
+	var totaltp=ttp1+ttp2+12;
+	var count;
+	var strcount={$strcount};
+	var realstrcount={$realstrcount};
+    var pnum;
+
+
+
+    var winh=$(window).height();
+    //未使用
+    
+    var pnum1=$(".reader-page").eq(0).offset().top;
+  //---------------------------初始的页数-----------------------------------------------------
+	var ttp=$(document).scrollTop();
+	var nn=Math.ceil((ttp-pnum1)/totaltp);
+	if(nn==0){nn=1;}
+	$('.page-input').val(nn);
+	
+
+	
+
+	//---------------------------向下滚动时触发-----------------------------------------------------
+	$(window).scroll( function() { 
+
+	var ttp=$(document).scrollTop();
+	var nn=Math.ceil((ttp-pnum1)/totaltp);
+	if(nn==0){nn=1;}
+	$('.page-input').val(nn);
+	} );
+
+
+
+
+	//---------------------------上下翻页-----------------------------------------------------
+	$('.zoom-add').click(function(){
+	});
+	$('.zoom-decrease').click(function(){
+	});
+
+	$('.page-next').click(function(){
+	count=parseInt($('.page-input').val());
+	if(count==strcount){
+
+		if(realstrcount==strcount){
+
+
+			$.mtceo.tip({content:"当前就是最后一页!", icon:'alert'});
+			
+		}else{
+
+			$.mtceo.tip({content:"购买后可阅读全文!", icon:'alert'});
+		}
+
+		
+		
+		
+	}else{
+
+		pnum=$(".reader-page").eq(count).offset().top;
+		$('.page-input').val(count+1);
+		$(document).scrollTop(pnum);
+	}
+	});
+	$('.page-prev').click(function(){
+		count=parseInt($('.page-input').val());
+		
+		if (count==1){
+			$(document).scrollTop(pnum1);
+			$.mtceo.tip({content:"当前就是第一页!", icon:'alert'});
+			
+			
+		}else{
+
+			pnum=$(".reader-page").eq(count-2).offset().top;
+			
+			//pnum=204+(count-2)*totaltp;
+			$('.page-input').val(count-1);
+			$(document).scrollTop(pnum);
+		}
+		
+		
+		
+	});
+
+
+
+
+
+	
+$('.page-input').keydown(function(event){
+	//在输入框输入按下回车后
+	
+	
+
+	event = window.event || event;//消除浏览器差异  
+     
+	if(event.keyCode == 13){
+
+	var curr=$(this).val();
+	
+	
+	if(isNaN(parseInt(curr))){
+
+		
+		$.mtceo.tip({content:"请输入有效整数!", icon:'alert'});
+	}else{
+
+
+	if(parseInt(curr)>strcount||parseInt(curr)<0){
+//
+		if(realstrcount==strcount){
+
+
+			$.mtceo.tip({content:"超出范围!", icon:'error'});
+			
+		}else{
+
+			$.mtceo.tip({content:"购买后可阅读全文!", icon:'alert'});
+		}
+
+        
+		
+	}
+	else{	
+
+		pnum=$(".reader-page").eq(curr-1).offset().top;
+			$(document).scrollTop(pnum);
+		
+		
+			
+	}
+	}
+	}
+});
+
+//---------------------------评分系统-----------------------------------------------------	
+ var rate="{$raty['raty']}";
+	
+	var s="{$raty['s']}";
+	var g="{$raty['g']}";
+	
+	$("#g").show();
+	$("#s").text(s);
+	$("#g").text("."+ g);
+
+	
+	$(".big_rate_up").animate({width:(parseInt(s)+parseInt(g)/10) * 14,height:26},1000);
+	$(".big_rate span").each(function(){
+		$(this).mouseover(function(){
+			$(".big_rate_up").width($(this).attr("rate") * 14 );
+			$("#s").text($(this).attr("rate"));
+			$("#g").text("");
+		}).click(function(){
+			var score = $(this).attr("rate");
+			//
+			$.getJSON("{:U('doc/setscore',array('id'=>$info['id'],'uid'=>$uid))}",
+		      {score:score},
+		      function(data){
+		    	   
+				  
+				   if(data.status==0){
+					   $.mtceo.tip({content:data.msg,icon:'error'});
+				   }else if(data.status==1){
+					   
+					   s=data.msg.s;
+					   g=data.msg.g;
+					   $("#s").text(s);
+						$("#g").text("."+ g);
+					   $("#ratycount").text(data.msg.count);
+					   $.mtceo.tip({content:"感谢您的评分!"});
+					   setTimeout(function (){window.location.reload();},1000);
+
+				   }
+		       }
+	        );
+		})
+	});
+	$(".big_rate").mouseout(function(){
+		$("#s").text(s);
+		$("#g").text("."+ g);
+		$(".big_rate_up").width((parseInt(s)+parseInt(g)/10) * 14);
+	});
+});
+</script>
+<div id="J_editorDialog" style="display:none;">
+<form id="comment_form" method="post" action="{:U('common/ajaxadd_comment')}">
+			<textarea name="info" style="width:100%;height:250px;"></textarea>
+			 <input type="hidden" name="itemid" value="{$id}" />
+ <input type="hidden" name="commentid" value="{$commentcount}" />
+  <input type="hidden" name="toid" id="toid" value="0" />
+ <input type="hidden" name="uid" value="{$uid}" />
+ <input type="hidden" name="typeid" value="1" />
+
+ 
+ <input style="margin-top:20px;" type="submit" class="wk-btn2 g-n-btns" value="发布" />
+	</form>	</div>
+
+
+ <script src="__PUBLIC__/js/kindeditor/kindeditor.js"></script>
+  <script src="__PUBLIC__/js/kindeditor/lang/zh_CN.js"></script>
+  <script charset="utf-8" src="__PUBLIC__/js/jquery-ui/js/jquery-ui-1.9.2.custom.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/js/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.css" />
+  
+<script>
+$(function() {	
+
+
+
+
+
+	$('#J_openDialog').click(function() {
+
+		var uri=$(this).attr('uri');
+
+		if(uri==''){
+			  
+			  $.mtceo.tip({content:'您还未登录',icon:'error'});
+		  }else{
+
+
+		
+		$('#J_editorDialog').dialog({
+			title : '评论',
+			width : 500,
+			open : function(event, ui) {
+				// 打开Dialog后创建编辑器
+				
+				
+				
+				
+				
+				KindEditor.create('textarea[name="info"]', {
+					resizeType : 0,
+					themeType : 'simple',
+					
+					uploadJson : '{:U("attachment/editer_upload")}',
+					fileManagerJson : '{:U("attachment/editer_manager")}',
+					allowFileManager : true,
+					items:['emoticons'],
+					emotPath:'./public/images/emot/{$emot}/',
+					emotwidth: '{$emotwidth}',
+					emotnum:'{$emotnum}',
+					afterBlur:function(){this.sync();}
+				});
+				 
+			},
+			beforeClose : function(event, ui) {
+				// 关闭Dialog前移除编辑器
+				KindEditor.remove('textarea[name="info"]');
+			}
+		});
+		  }
+	});
+
+
+	$('#comment_form').ajaxForm({success:complate,dataType:'json'});
+
+	 
+	function complate(result){
+		
+		if(result.status == 1){
+			
+	        $.mtceo.tip({content:result.msg});
+	        setTimeout(function (){window.location.reload();},1000);
+		} else {
+			$.mtceo.tip({content:result.msg, icon:'alert'});
+		}
+	}
+
+	
+});
+
+
+</script>
+
+<include file="./app/Tpl/home/baidu/public/footer.html" />

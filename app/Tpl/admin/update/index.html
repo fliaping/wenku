@@ -1,0 +1,44 @@
+<include file="public:header" />
+<div class="common-form pad_lr_10">
+
+
+<if condition="$newver eq 0">
+	<table id="checktable" width="100%" cellpadding="2" cellspacing="1" class="table_form">
+
+            <tr>
+            	<td>注意事项：升级前请注意备份好文件和数据库，特别是用户数据user和文档信息doc_con。 
+            	</td>
+            	</tr>
+            	<tr>
+                <td style="color:blue">恭喜！目前您的版本为最新版本</td>
+                
+            </tr>
+</table>
+	<else />
+	
+	<div id="downloadver">
+	
+	<form action="{:U('update/index')}" method="post">
+		<table width="100%" cellpadding="2" cellspacing="1" class="table_form">
+<input type="hidden" name="verinfodata" id="verinfodata" value="" />
+            <tr>
+            	<th><input type="hidden" name="accept" value="1" /></th>
+                <td><input type="submit" id="J_clear_cache" class="btn btn_submit" value="下载升级文件"/></td>
+                <td id="verinfo" style="color:red;">最新版本为{$newver},您可以选择升级！！！</td>
+            </tr>
+		</table>
+	</form>
+	
+	</div>
+	</if>
+</div>
+</div>
+
+
+
+
+
+
+<include file="public:footer" />
+</body>
+</html>

@@ -1,0 +1,222 @@
+<include file="./app/Tpl/home/baidu/public/head.html" />
+<script src="__PUBLIC__/js/count/jQuery.artTxtCount.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/upload/uploadify.css" media="all">
+<div class="cleft">
+<div class="setinfo">
+<div class="red_orange">填写文档信息</div>
+<form id="info_form" action="{:U('doc/doc_share',array('type'=>'add'))}" method="post" onsubmit="return formcheck();" >
+<table width="100%" border="0">
+<tr>
+    <td align="right"><s>*</s>文档：</td>
+    <td width="450">
+<div id="fileinfo"></div>
+
+<input type="hidden" name="fileurl"  id="fileurl"  size="30" value="{$info.fileurl}">
+<input type="hidden" name="ext"  id="ext"  size="30" value="{$info.ext}">
+<input type="hidden" name="filesize"  id="filesize"  size="30" value="{$info.filesize}">
+<input type="hidden" name="oldname"  id="oldname"  size="30" value="{$info.oldname}">
+<input type="hidden" name="hash"  id="hash"  size="30" value="{$info.hash}">
+<button id="J_upload_img">上传</button>
+
+<input type="hidden" name="viewurl"  id="viewurl"  size="30" value="{$info.viewurl}">
+</td>
+    <td>支持office、wps等类型文档上传</td>
+  </tr>
+
+<tr>
+    <td width="80" align="right"><s>*</s>标题：</td>
+    <td><input type="text" name="title" id="title" class="ins w300" value="{$info.title}" /><div id="J_upload_img-queue" class="uploadify-queue"></div></td>
+    <td id="titleTip">控制在50个字符以内</td>
+  </tr>
+
+  
+
+  <tr>
+    <td width="80" align="right">标签：</td>
+    <td><input type="text" name="tags" id="tags" class="ins w300" value="{$info.tags}" />&nbsp;&nbsp;
+    <input type="button" value="自动获取" id="J_gettags" name="tags_btn" class="wk-btn2 minibtns"></td>
+    <td>标签请用半角逗号,隔开</td>
+  </tr>
+  <tr>
+    <td width="80" align="right"><s>*</s>售价：</td>
+    <td><input type="text" name="score" id="score" class="ins" value="{$info.score}" /></td>
+    <td>售价必须为数字且只能为整数</td>
+  </tr>
+  <tr>
+    <td width="80" align="right"><s>*</s>选择分类：</td>
+    <td>
+    <input type="hidden" name="cateid" id="J_cate_id" value="" />
+<select size=10 class="J_cate_select iselect" data-pid="0" data-uri="{:U('doc_cate/ajax_getsubcate')}"  data-selected="">
+
+</select>
+
+
+
+
+</td>
+    <td id="J_cate_idTip">&nbsp;</td>
+  </tr>
+  
+  
+    <tr>
+    <td align="right"></td>
+    
+    
+    
+    
+    <td> <input type="submit" class="wk-btn2 g-n-btns" value="立即分享" /></td>
+    <td>&nbsp;</td>
+  </tr>
+ 
+</table>
+	</form>
+
+</div>
+</div>
+
+<div class="cright">
+
+<div class="singlea"><a href="javascript:history.go(-1)">>返回上一页面</a></div>
+
+
+</div>
+
+<div class="clear">
+
+</div>
+
+  <script src="__PUBLIC__/js/count/jQuery.artTxtCount.js"></script>
+  <script src="__PUBLIC__/js/upload/jquery.uploadify.js"></script>
+<script type="text/javascript">
+
+var uploadimgurl="{$uploadimgurl}";
+var rooturl="{$rooturl}";
+var fileext="{$attachext}";
+var filesize="{$attachsize}";
+
+function formcheck(){
+
+	var flag;
+	var mess;
+
+	//alert($('#title').val());
+
+	if($('#title').val() == ''){
+
+		flag=1;
+		mess='标题必填';
+        
+	}
+	
+	
+	if($('#fileurl').val() == ''){
+
+		flag=1;
+		mess='请上传文档';
+        
+	}
+
+	if(isNaN(parseInt($('#score').val()))){
+		flag=1;
+		mess='必须为整数且大于等于0';
+			
+	}
+	
+	
+		
+	if(flag==1){
+		flag=0;
+		//alert(mess);
+		$.mtceo.tip({content:mess, icon:'error'});	
+		return false;
+	}
+
+			
+		
+	return true;
+
+	}
+
+
+$(function(){
+	
+
+
+
+
+	
+	$('.J_cate_select').cate_select('请选择');
+
+		// 单个
+		
+		
+		$('#title').artTxtCount($('#titleTip'), 50);
+		$('#J_gettags').live('click', function() {
+			var title = $.trim($('#title').val());
+			
+			if(title == ''){
+				$.mtceo.tip({content:'标题为空', icon:'alert'});
+				return false;
+			}
+			$.getJSON('{:U("doc/ajax_gettags")}', {title:title}, function(result){
+				if(result.status == 1){
+					$('#tags').val(result.data);
+				}else{
+					$.mtceo.tip({content:result.msg});
+				}
+			});
+		});
+			//插件调用
+	$('#J_upload_img').uploadify({
+				'formData'     : {'url':rooturl},
+				'swf'      : PUBLIC_PATH+"/js/upload/uploadify.swf",
+				'uploader': uploadimgurl,
+				'scriptAccess'   : 'always',
+				'multi'    : false,
+				'buttonText' 	: '文档上传',
+				'width':'78',
+				'height':'26',
+				'fileTypeExts'	: fileext,
+				'fileSizeLimit'   : filesize, 
+				'uploadLimit'     : 1,    
+				'queueSizeLimit' : 1,
+               
+
+
+				
+				'onUploadSuccess' : function(file,data,response){
+
+					var data = $.parseJSON(data);
+					
+                    if(data.status==1){
+
+					 
+					$('#fileurl').val(data.info.name);
+					$('#oldname').val(data.info.oldname);
+					$('#title').val(data.info.oldname);
+					$('#filesize').val(data.info.size);
+					$('#viewurl').val(data.info.ycname);
+					
+					$('#hash').val(data.info.hash);
+					
+					$('#tags').val(data.info.ext);
+					$('#ext').val(data.info.ext);
+
+					$('#J_upload_img').hide();
+					$('#fileinfo').text(data.info.oldname+'.'+data.info.ext);
+					$('#fileinfo').show();
+
+					
+                    }else{
+					$.mtceo.tip({content:data.info, icon:'error'});
+					//window.location.reload();
+                    }
+            }
+			});
+			
+
+
+    
+});
+</script>
+<include file="./app/Tpl/home/baidu/public/footer.html" />

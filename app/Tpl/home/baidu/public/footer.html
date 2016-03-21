@@ -1,0 +1,24 @@
+
+<div class="footer">
+<p><div class="fl">2005－2013 mtceo.net, all rights reserved&nbsp;&nbsp;<a href="http://www.miitbeian.gov.cn/">{:C('mtceo_site_icp')}</a></div> 
+<div class="fr">
+
+<volist name="navlist['bottom']" id="vo">
+<a href="{$vo.link}" alt="{$vo.alias}"<if condition="$vo['target'] eq 1"> target="_blank"</if>>{$vo.name}</a><em>|</em>
+</volist>
+</div></p>
+<p class="clear">PowerBy <a href="http://www.mtceo.net">MTCEO开源社区</a></p>
+</div>
+</div>
+
+<script> 
+//初始化弹窗
+(function (d) {
+    d['okValue'] = lang.dialog_ok;
+    d['cancelValue'] = lang.dialog_cancel;
+    d['title'] = lang.dialog_title;
+})($.dialog.defaults);
+</script>
+<script src="__PUBLIC__/js/var.js"></script>
+</body>
+</html>
